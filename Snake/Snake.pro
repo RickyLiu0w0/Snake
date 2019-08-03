@@ -25,13 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        gamewidget.cpp \
         main.cpp \
         widget.cpp
 
 HEADERS += \
+        gamewidget.h \
         widget.h
 
 FORMS += \
+        gamewidget.ui \
         widget.ui
 
 # Default rules for deployment.
