@@ -15,8 +15,15 @@ class GameWidget : public QWidget
         explicit GameWidget(QWidget *parent = nullptr);
         ~GameWidget();
 
+    private slots:
+        void on_pushButton_clicked();
+
+
     private:
         Ui::GameWidget *ui;
+
+    signals:
+        void sendsignal();
 };
 
 #endif // GAMEWIDGET_H

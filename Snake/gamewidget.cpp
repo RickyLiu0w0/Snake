@@ -6,9 +6,16 @@ GameWidget::GameWidget(QWidget *parent) :
     ui(new Ui::GameWidget)
 {
     ui->setupUi(this);
+
 }
 
 GameWidget::~GameWidget()
 {
     delete ui;
+}
+
+void GameWidget::on_pushButton_clicked()
+{
+    emit sendsignal();
+    this->close();
 }
