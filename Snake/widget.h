@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
+#include <QRegExpValidator>
 
 #include "gamewidget.h"
 
@@ -23,7 +24,7 @@ class Widget : public QWidget
         ~Widget();
 
     private slots:
-        void pBtnTest_clicked();
+        void pBtnLogin_clicked();
         void reshow();
 
     private:
@@ -31,12 +32,16 @@ class Widget : public QWidget
 
         //游戏界面成员
         GameWidget * gameWidget;
-        QGridLayout * gridLayout;
+        QVBoxLayout * vLayout;// 垂直布局
+        QGridLayout * gridLayoutInf;//栅格布局（放置玩家信息）
+        QGridLayout * gridLayoutBut;//栅格布局（放置按钮）
 
         //当前页面各控件成员
-        QLabel * labLogin ; //输入框标签
-        QLineEdit * txtEdit; //名字输入框
-        QPushButton * pBtnTest;//登入按钮
+        QLabel * labName ; //输入框标签
+        QLineEdit * txtEditName; //名字输入框
+        QLabel * labPassword; // 匹配码标签
+        QLineEdit * txtEditPassword; //匹配码输入框
+        QPushButton * pBtnLogin;//登入按钮
 
         void clearLayout();
         void setUpLayout();

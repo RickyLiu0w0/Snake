@@ -6,12 +6,10 @@ Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
-
     setUpLayout();//这里可以进行窗口各项的初始化设置
 
     //日志输出区（调试用）
-    qDebug("grid Layout 有 %d 个控件", gridLayout->count());
-
+    qDebug("grid Layout 有 %d 个控件", gridLayoutInf->count());
 }
 
 Widget::~Widget()
@@ -19,7 +17,7 @@ Widget::~Widget()
     delete ui;
 }
 
-void Widget::pBtnTest_clicked()
+void Widget::pBtnLogin_clicked()
 {
     //this->hide();
     clearLayout();
@@ -40,18 +38,18 @@ void Widget::reshow()
 
 void Widget::clearLayout()
 {
-    while (gridLayout->count())
+    while (vLayout->count())
     {
-        QWidget * pWidget = gridLayout->itemAt(0)->widget();
+        QWidget * pWidget = vLayout->itemAt(0)->widget();
         if(pWidget)
         {
             pWidget->setParent(nullptr);
-            gridLayout->removeWidget(pWidget);
+            vLayout->removeWidget(pWidget);
             delete pWidget;
         }
         else
         {
-            QLayout * pLayout = gridLayout->itemAt(0)->layout();
+            QLayout * pLayout = vLayout->itemAt(0)->layout();
             if(pLayout)
             {
                 while (pLayout->count())
@@ -69,7 +67,7 @@ void Widget::clearLayout()
                     }
                 }
             }
-            gridLayout->removeItem(gridLayout->itemAt(0));
+            vLayout->removeItem(vLayout->itemAt(0));
         }
     }
     if (this->layout())
@@ -87,19 +85,43 @@ void Widget::setUpLayout()
     setWindowFlags(flags);
     //结束
 
-   gridLayout = new QGridLayout();//创建栅格布局
+   vLayout = new QVBoxLayout();//创建水平布局
+   gridLayoutInf = new  QGridLayout();//创建栅格布局
+   gridLayoutBut = new QGridLayout();
 
-    //加入编辑框标签
-    labLogin = new QLabel();
-    labLogin->setText("玩家姓名：");
-    gridLayout->addWidget(labLogin,0,0);
+   vLayout->addLayout(gridLayoutInf);
+   vLayout->addLayout(gridLayoutBut);
+    //加入名字提示标签
+    labName = new QLabel();
+    labName->setText("玩家姓名：");
+    gridLayoutInf->addWidget(labName,0,0);
+
+    //加入名字输入框
+    txtEditName = new QLineEdit();
+    txtEditName->setPlaceholderText("输入您的玩家姓名（不超过10个字符）");//输入提示项
+    txtEditName->setMaxLength(10);//设置长度，不超10字符
+    txtEditName->setEchoMode(QLineEdit::Normal);//输入内容为普通文本
+    gridLayoutInf->addWidget(txtEditName,0,1);
+
+    //加入password提示标签
+    labPassword = new QLabel();
+    labPassword->setText("帕斯沃：");
+    gridLayoutInf->addWidget(labPassword,1,0);
+
+    //加入passwo输入框
+    txtEditPassword = new QLineEdit();
+    txtEditPassword->setPlaceholderText("输入您的匹配码");//输入提示项
+    txtEditPassword->setEchoMode(QLineEdit::PasswordEchoOnEdit);//输入内容为普通文本
+    QRegExp reg("^([0-9]*|[a-zA-Z]*)*$");//规定password的正则表达式
+   txtEditPassword->setValidator(new QRegExpValidator(reg,txtEditPassword));//设置类型监视
+    gridLayoutInf->addWidget(txtEditPassword,1,1);
 
     //加入确认按钮
-    pBtnTest = new QPushButton("push",this);
-    gridLayout->addWidget(pBtnTest,0,1);
-    connect (pBtnTest, SIGNAL(clicked()), this, SLOT(pBtnTest_clicked()));
+    pBtnLogin = new QPushButton("push",this);
+    gridLayoutBut->addWidget(pBtnLogin,0,1);
+    connect (pBtnLogin, SIGNAL(clicked()), this, SLOT(pBtnLogin_clicked()));
 
     //交给view渲染处理页面
-    this->setLayout(gridLayout);
+    this->setLayout(vLayout);
     ui->setupUi(this);
 }
