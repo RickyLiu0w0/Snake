@@ -33,7 +33,7 @@ void dataHelper::creatFile(fstream &file)
     }
     else
     {
-        file.clear();
+       file.clear();
        qDebug("文件非首次创建");
        file.seekg(0);
        file.read(reinterpret_cast< char * >(&count), sizeof (count));
@@ -142,6 +142,20 @@ void dataHelper::clearAll(fstream &file)
     file.seekg(0);
     count = 0;
      file.write(reinterpret_cast<const char * >(&count), sizeof (count));
-
      truncate("data.dat",sizeof(count));
+     file.flush();
+}
+
+player dataHelper::getDatabyName(fstream &file, QString name)
+{
+    QList<player> list;
+    player pla;
+    list = getAllPlayer(file);
+    for (int i = 0; i < list.size(); i++)
+    {
+        pla = list.at(i);
+        if (QString::compare(name, pla.getName()) == 0)
+            return pla;
+    }
+    return NULL;
 }

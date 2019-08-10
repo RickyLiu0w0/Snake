@@ -37,16 +37,15 @@ QString player::getName()  const
 //访问和设置玩家密码
 void player::setPassword(QString password)
 {
-    QString temp = "";
-    for (int var = 0; var < password.length(); var++)
-    {
-        temp += base64_encryption(QString::number(password.at(var).toLatin1(),2));
-    }
+    QString tempResult = "";
+
+    tempResult = base64_encryption(password);
+    //由QString转换为Char *
     char* ptr;
     QByteArray by;
-    by = temp.toLatin1();
+    by = tempResult.toLatin1();
     ptr = by.data();
-    memcpy(this->password,ptr,28);
+    memcpy(this->password,ptr,25);
     qDebug("password: %s", qPrintable(this->password) );
 }
 QString player::getPassword() const
@@ -76,9 +75,32 @@ int player::getRank() const
 
 QString player::base64_encryption(const QString input)
 {
+    QString passBin = "";
+    QString binResult = "";
+    for (int var = 0; var < input.length(); var++)
+    {
+       passBin.clear();
+       passBin = QString::number(input.at(var).toLatin1(),2);
+       qDebug("Binary Before: %s", qPrintable(passBin) );
+       //为了补全8位二进制
+       if (passBin.length() < 8)
+       {
+           QString passBinHelp =passBin;
+            passBin.clear();
+           for (int i = 0; i < 8 - passBinHelp.length(); i++)
+           {
+               passBin += "0";
+           }
+           passBin += passBinHelp;
+       }
+
+       //将每一个8位二进制连接起来
+       binResult += passBin;
+    }
+     qDebug("Binary After: %s", qPrintable(binResult) );
     int i = 0;
     int k = 0;
-    const int n = input.length();
+    const int n =binResult .length();
     QString subs;
     QString output;
     QString value = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -86,7 +108,7 @@ QString player::base64_encryption(const QString input)
     {
         for (k = 0; k < 4; k++)
         {
-            subs = input.mid(i + k * 6 , 6);
+            subs = binResult.mid(i + k * 6 , 6);
             int sum = 0;
             int j = 0;
 
@@ -110,7 +132,7 @@ QString player::base64_encryption(const QString input)
            charlen = (n - i ) /6 + 1;
        for (k = 0; k < charlen; k++)
        {
-           subs = input.mid( i + k * 6, i + (k + 1) * 6 - 1)   ;
+           subs = binResult.mid( i + k * 6, i + (k + 1) * 6 - 1)   ;
 
            int sum = 0;
            int j = 0;
@@ -130,4 +152,13 @@ QString player::base64_encryption(const QString input)
            output += "==";
         }
    return output;
+}
+
+
+bool player::isCorrect(QString password)
+{
+    qDebug("用户输入的密码是：%s", qPrintable(password));
+    QString result =  base64_encryption(password);
+    qDebug("原密码是：%s", qPrintable(this->password));
+    return QString::compare(this->password,result) == 0;
 }

@@ -19,6 +19,7 @@ class dataHelper
         void updata(fstream& file ,player& pla);
         void caculateRank(fstream& file);
         void clearAll(fstream& file);
+        player getDatabyName(fstream& file, QString name);
 
     private:
         int count;

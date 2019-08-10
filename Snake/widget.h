@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QRegExpValidator>
+#include <QMessageBox>
 
 #include "gamewidget.h"
 #include "datahelper.h"
@@ -27,7 +28,8 @@ class Widget : public QWidget
     private slots:
         void pBtnLogin_clicked();
         void reshow();
-        void test();
+        void pBtnRegister_clicked();
+       //void test();
 
     private:
         Ui::Widget *ui;
@@ -45,9 +47,12 @@ class Widget : public QWidget
         QLineEdit * txtEditPassword; //匹配码输入框
         QPushButton * pBtnLogin;//登入按钮
         QPushButton * pBtnRegister;//开档按钮
+        dataHelper * dh;//数据处理
+        fstream dataFile; //储存数据
 
         void clearLayout();//清除UI界面
         void setUpLayout();//生成UI界面
+        void jumpPage();//跳转页面
 };
 
 #endif // WIDGET_H

@@ -30,10 +30,13 @@ class player
         void setRank(int rank);
         int getRank() const;
 
+        //判断玩家密码是否正确，比较的是参数password的正确性
+        bool isCorrect(QString password);
+
     private:
         int ID;
         char name[12];
-        char password[29];//21*4\3
+        char password[14];//10*4\3
         double score;
         int rank;
 
