@@ -25,12 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        datahelper.cpp \
         gamewidget.cpp \
         main.cpp \
+        player.cpp \
         widget.cpp
 
 HEADERS += \
+        datahelper.h \
         gamewidget.h \
+        player.h \
         widget.h
 
 FORMS += \

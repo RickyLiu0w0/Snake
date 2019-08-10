@@ -103,7 +103,7 @@ void Widget::setUpLayout()
     txtEditName->setEchoMode(QLineEdit::Normal);//输入内容为普通文本
     gridLayoutInf->addWidget(txtEditName,0,1);
 
-    //加入password提示标签
+    //加入password提示标
     labPassword = new QLabel();
     labPassword->setText("帕斯沃：");
     gridLayoutInf->addWidget(labPassword,1,0);
@@ -116,9 +116,14 @@ void Widget::setUpLayout()
    txtEditPassword->setValidator(new QRegExpValidator(reg,txtEditPassword));//设置类型监视
     gridLayoutInf->addWidget(txtEditPassword,1,1);
 
+
+    //加入注册按钮
+    pBtnLogin = new QPushButton("注册", this);
+    gridLayoutBut->addWidget(pBtnLogin,2,1);
+
     //加入确认按钮
-    pBtnLogin = new QPushButton("push",this);
-    gridLayoutBut->addWidget(pBtnLogin,0,1);
+    pBtnLogin = new QPushButton("开始游戏",this);
+    gridLayoutBut->addWidget(pBtnLogin,2,2);
     connect (pBtnLogin, SIGNAL(clicked()), this, SLOT(pBtnLogin_clicked()));
 
     //交给view渲染处理页面

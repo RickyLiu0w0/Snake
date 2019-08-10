@@ -10,6 +10,7 @@
 #include <QRegExpValidator>
 
 #include "gamewidget.h"
+#include "datahelper.h"
 
 namespace Ui {
 class Widget;
@@ -43,8 +44,8 @@ class Widget : public QWidget
         QLineEdit * txtEditPassword; //匹配码输入框
         QPushButton * pBtnLogin;//登入按钮
 
-        void clearLayout();
-        void setUpLayout();
+        void clearLayout();//清除UI界面
+        void setUpLayout();//生成UI界面
 };
 
 #endif // WIDGET_H
