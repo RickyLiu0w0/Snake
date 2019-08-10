@@ -1,8 +1,10 @@
 #include "player.h"
 
 player::player(int id  , const QString & name , const QString & password , double score , int rank)
-    :ID(id), name(name), password(password), score(score),rank(rank)
+    :ID(id), score(score),rank(rank)
 {
+    setName(name);
+    setPassword(password);
 }
 
 
@@ -20,8 +22,12 @@ int player::getId() const
 //访问和设置玩家姓名
 void player::setName(QString name)
 {
-    this->name = name; //浅拷贝，但当（ this->name）发生改变，触发深拷贝
-    qDebug("name: %s", qPrintable(this->name) );
+    char* ptr;
+    QByteArray by;
+    by = name.toLatin1();
+    ptr = by.data();
+    memcpy(this->name,ptr,12);//这一句，必须加，不然不只是把指针指向了值，并没有赋值
+    qDebug("ID: %s", this->name);
 }
 QString player::getName()  const
 {
@@ -31,10 +37,16 @@ QString player::getName()  const
 //访问和设置玩家密码
 void player::setPassword(QString password)
 {
+    QString temp = "";
     for (int var = 0; var < password.length(); var++)
     {
-        this->password += base64_encryption(QString::number(password.at(var).toLatin1(),2));
+        temp += base64_encryption(QString::number(password.at(var).toLatin1(),2));
     }
+    char* ptr;
+    QByteArray by;
+    by = temp.toLatin1();
+    ptr = by.data();
+    memcpy(this->password,ptr,28);
     qDebug("password: %s", qPrintable(this->password) );
 }
 QString player::getPassword() const

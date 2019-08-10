@@ -32,8 +32,8 @@ class player
 
     private:
         int ID;
-        QString name;
-        QString password;
+        char name[12];
+        char password[29];//21*4\3
         double score;
         int rank;
 

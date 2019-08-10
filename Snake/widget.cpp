@@ -110,8 +110,9 @@ void Widget::setUpLayout()
 
     //加入passwo输入框
     txtEditPassword = new QLineEdit();
-    txtEditPassword->setPlaceholderText("输入您的匹配码");//输入提示项
+    txtEditPassword->setPlaceholderText("输入您的匹配码（不超过21个字符）");//输入提示项
     txtEditPassword->setEchoMode(QLineEdit::PasswordEchoOnEdit);//输入内容为普通文本
+    txtEditPassword->setMaxLength(21);
     QRegExp reg("^([0-9]*|[a-zA-Z]*)*$");//规定password的正则表达式
    txtEditPassword->setValidator(new QRegExpValidator(reg,txtEditPassword));//设置类型监视
     gridLayoutInf->addWidget(txtEditPassword,1,1);
@@ -140,12 +141,15 @@ void Widget::test()
     dataHelper dh;
     dh.creatFile(file);
     player pla;
-    pla.setName("wwwwwwwwwwwwwwww");
-    pla.setPassword("3");
-    int i = dh.saveData(file, pla);
-    //pla = dh.getDatabyId(file,1);
-    qDebug("ID = %s", qPrintable( pla.getName()));
-    qDebug("pla.getId() = %d", pla.getId());
+    pla.setName("23");
+    pla.setScore(5.4);
+    pla.setPassword("45");
+    dh.saveData(file,pla);
 
+    QList<player> list = dh.getAllPlayer(file);
+    for (int  i= 0;  i < list.size(); i++)
+    {
+        qDebug("Id = %d; name = %s ; score = %.2f; rank = %d",list.at(i).getId(), qPrintable(list.at(i).getName()), list.at(i).getScore(), list.at(i).getRank());
+    }
     file.close();
 }
