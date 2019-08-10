@@ -4,6 +4,7 @@
 #include <QList>
 #include <iostream>
 #include <fstream>
+#include <unistd.h>
 #include "player.h"
 using namespace std;
 class dataHelper
@@ -16,6 +17,8 @@ class dataHelper
         QList<player> getAllPlayer(fstream& file);
         bool isExist(fstream& file, QString name);
         void updata(fstream& file ,player& pla);
+        void caculateRank(fstream& file);
+        void clearAll(fstream& file);
 
     private:
         int count;

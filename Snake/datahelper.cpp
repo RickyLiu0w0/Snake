@@ -73,15 +73,32 @@ QList<player> dataHelper::getAllPlayer(fstream& file)
     file.seekg(sizeof (count));
     QList<player> list;
     player pla ;
+
+    /**方法一
     while (file.peek() != EOF) //解决读两次
     {
         file.read(reinterpret_cast<char * >( & pla), sizeof(player));
         list.append(pla);
     }
     file.clear();
+    */
+
+    /**方法二*/
+    for (int i = 0; i < count; i++)
+    {
+        file.read(reinterpret_cast<char * >( & pla), sizeof(player));
+        list.append(pla);
+    }
     return list;
 }
 
+/**
+ * @brief dataHelper::isExist
+ * @param file
+ * @param name
+ * @return bool
+ * 通过名字查看是否新人
+ */
 bool dataHelper::isExist(fstream& file, QString name)
 {
     QList<player> list;
@@ -101,3 +118,30 @@ bool dataHelper::isExist(fstream& file, QString name)
       file.seekg((pla.getId() - 1) *sizeof (player) + sizeof (count));
       file.write(reinterpret_cast<const char *>(&pla), sizeof (player));
  }
+
+  void dataHelper::caculateRank(fstream& file)
+  {
+      QList<player> list;
+      int rank = 1;
+      list = getAllPlayer(file);
+      player pal;
+      for (int i = 0; i < list.size(); i++)
+      {
+          rank = 1;
+           for (int j = 0; j < list.size(); j++)
+               if (list.at(i).getScore() < list.at(j).getScore())
+                   rank++;
+           pal = list.at(i);//要把引用给过去
+           pal.setRank(rank);//不能用at
+           updata(file,pal);
+      }
+  }
+
+void dataHelper::clearAll(fstream &file)
+{
+    file.seekg(0);
+    count = 0;
+     file.write(reinterpret_cast<const char * >(&count), sizeof (count));
+
+     truncate("data.dat",sizeof(count));
+}

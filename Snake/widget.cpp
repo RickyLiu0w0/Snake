@@ -140,12 +140,13 @@ void Widget::test()
         qDebug("打开文件失败");
     dataHelper dh;
     dh.creatFile(file);
-    player pla;
-    pla.setName("23");
-    pla.setScore(5.4);
-    pla.setPassword("45");
-    dh.saveData(file,pla);
-
+    //player pla;
+    //pla.setName("223");
+   // pla.setScore(5.0);
+   // pla.setPassword("5");
+    //dh.saveData(file,pla);
+    dh.caculateRank(file);
+    dh.clearAll(file);
     QList<player> list = dh.getAllPlayer(file);
     for (int  i= 0;  i < list.size(); i++)
     {
