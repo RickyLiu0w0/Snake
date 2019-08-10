@@ -27,6 +27,7 @@ class Widget : public QWidget
     private slots:
         void pBtnLogin_clicked();
         void reshow();
+        void test();
 
     private:
         Ui::Widget *ui;
@@ -43,6 +44,7 @@ class Widget : public QWidget
         QLabel * labPassword; // 匹配码标签
         QLineEdit * txtEditPassword; //匹配码输入框
         QPushButton * pBtnLogin;//登入按钮
+        QPushButton * pBtnRegister;//开档按钮
 
         void clearLayout();//清除UI界面
         void setUpLayout();//生成UI界面

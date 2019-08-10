@@ -21,6 +21,7 @@ int player::getId() const
 void player::setName(QString name)
 {
     this->name = name; //浅拷贝，但当（ this->name）发生改变，触发深拷贝
+    qDebug("name: %s", qPrintable(this->name) );
 }
 QString player::getName()  const
 {
@@ -34,6 +35,7 @@ void player::setPassword(QString password)
     {
         this->password += base64_encryption(QString::number(password.at(var).toLatin1(),2));
     }
+    qDebug("password: %s", qPrintable(this->password) );
 }
 QString player::getPassword() const
 {

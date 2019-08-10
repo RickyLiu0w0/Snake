@@ -10,7 +10,6 @@ class dataHelper
 {
     public:
         dataHelper();
-        ~dataHelper();
         void creatFile(fstream& file);
         int saveData(fstream& file, player& pla);
         player getDatabyId(fstream& file, int id);

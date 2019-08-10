@@ -52,12 +52,16 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../Snake/gamewidget.cpp \
+SOURCES       = ../Snake/datahelper.cpp \
+		../Snake/gamewidget.cpp \
 		../Snake/main.cpp \
+		../Snake/player.cpp \
 		../Snake/widget.cpp moc_gamewidget.cpp \
 		moc_widget.cpp
-OBJECTS       = gamewidget.o \
+OBJECTS       = datahelper.o \
+		gamewidget.o \
 		main.o \
+		player.o \
 		widget.o \
 		moc_gamewidget.o \
 		moc_widget.o
@@ -222,6 +226,7 @@ DIST          = ../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_post.prf \
+		../Snake/.qmake.stash \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/toolchain.prf \
@@ -249,9 +254,13 @@ DIST          = ../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/exceptions.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/lex.prf \
-		../Snake/Snake.pro ../Snake/gamewidget.h \
-		../Snake/widget.h ../Snake/gamewidget.cpp \
+		../Snake/Snake.pro ../Snake/datahelper.h \
+		../Snake/gamewidget.h \
+		../Snake/player.h \
+		../Snake/widget.h ../Snake/datahelper.cpp \
+		../Snake/gamewidget.cpp \
 		../Snake/main.cpp \
+		../Snake/player.cpp \
 		../Snake/widget.cpp
 QMAKE_TARGET  = Snake
 DESTDIR       = 
@@ -436,6 +445,7 @@ Makefile: ../Snake/Snake.pro ../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/q
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/toolchain.prf \
@@ -629,6 +639,7 @@ Makefile: ../Snake/Snake.pro ../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/q
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/toolchain.prf:
@@ -690,8 +701,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.13.0/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Snake/gamewidget.h ../Snake/widget.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Snake/gamewidget.cpp ../Snake/main.cpp ../Snake/widget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Snake/datahelper.h ../Snake/gamewidget.h ../Snake/player.h ../Snake/widget.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Snake/datahelper.cpp ../Snake/gamewidget.cpp ../Snake/main.cpp ../Snake/player.cpp ../Snake/widget.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Snake/gamewidget.ui ../Snake/widget.ui $(DISTDIR)/
 
 
@@ -702,6 +713,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r Snake.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -739,6 +751,25 @@ moc_gamewidget.cpp: ../Snake/gamewidget.h \
 moc_widget.cpp: ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QRegExpValidator \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../Snake/gamewidget.h \
+		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		moc_predefs.h \
 		../../../../Qt/5.13.0/clang_64/bin/moc
 	/Users/rickyliu/Documents/Qt/5.13.0/clang_64/bin/moc $(DEFINES) --include /Users/rickyliu/Documents/QT/Project/Snake/build-Snake-Desktop_Qt_5_13_0_clang_64bit-Debug/moc_predefs.h -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/mkspecs/macx-clang -I/Users/rickyliu/Documents/QT/Project/Snake/Snake -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtGui.framework/Headers -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib ../Snake/widget.h -o moc_widget.cpp
@@ -770,6 +801,14 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+datahelper.o: ../Snake/datahelper.cpp ../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datahelper.o ../Snake/datahelper.cpp
+
 gamewidget.o: ../Snake/gamewidget.cpp ../Snake/gamewidget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
@@ -779,13 +818,56 @@ gamewidget.o: ../Snake/gamewidget.cpp ../Snake/gamewidget.h \
 main.o: ../Snake/main.cpp ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QRegExpValidator \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../Snake/gamewidget.h \
+		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Snake/main.cpp
 
+player.o: ../Snake/player.cpp ../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o ../Snake/player.cpp
+
 widget.o: ../Snake/widget.cpp ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QGridLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qgridlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLineEdit \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QRegExpValidator \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../Snake/gamewidget.h \
+		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		ui_widget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widget.o ../Snake/widget.cpp
 

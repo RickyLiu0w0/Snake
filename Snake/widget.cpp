@@ -118,8 +118,9 @@ void Widget::setUpLayout()
 
 
     //加入注册按钮
-    pBtnLogin = new QPushButton("注册", this);
-    gridLayoutBut->addWidget(pBtnLogin,2,1);
+    pBtnRegister = new QPushButton("测试", this);
+    gridLayoutBut->addWidget( pBtnRegister,2,1);
+    connect ( pBtnRegister, SIGNAL(clicked()), this, SLOT(test()));
 
     //加入确认按钮
     pBtnLogin = new QPushButton("开始游戏",this);
@@ -129,4 +130,22 @@ void Widget::setUpLayout()
     //交给view渲染处理页面
     this->setLayout(vLayout);
     ui->setupUi(this);
+}
+
+void Widget::test()
+{
+    fstream file("data.dat", ios::in | ios::out | ios::binary);
+    if (!file)
+        qDebug("打开文件失败");
+    dataHelper dh;
+    dh.creatFile(file);
+    player pla;
+    pla.setName("wwwwwwwwwwwwwwww");
+    pla.setPassword("3");
+    int i = dh.saveData(file, pla);
+    //pla = dh.getDatabyId(file,1);
+    qDebug("ID = %s", qPrintable( pla.getName()));
+    qDebug("pla.getId() = %d", pla.getId());
+
+    file.close();
 }
