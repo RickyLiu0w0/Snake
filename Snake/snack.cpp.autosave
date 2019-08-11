@@ -1,0 +1,15 @@
+#include "snack.h"
+
+Snack:: Snack(int hight, int length)
+{
+    direction = North;
+    fieldLength = length;
+    fileHigth = hight;
+    alive = true;
+    int beginX = length / 2;
+    int beginY =hight / 2;
+    SnakeUnit * s;
+    s = new SnakeUnit(beginX, beginY);
+    s->setToHead();
+    s = new SnakeUnit(beginX)
+}

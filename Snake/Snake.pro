@@ -26,15 +26,29 @@ CONFIG += c++11
 
 SOURCES += \
         datahelper.cpp \
+        food.cpp \
+        foodunit.cpp \
         gamewidget.cpp \
         main.cpp \
         player.cpp \
+        snake.cpp \
+        snakeunit.cpp \
+        unit.cpp \
+        wall.cpp \
+        wallunit.cpp \
         widget.cpp
 
 HEADERS += \
         datahelper.h \
+        food.h \
+        foodunit.h \
         gamewidget.h \
         player.h \
+        snake.h \
+        snakeunit.h \
+        unit.h \
+        wall.h \
+        wallunit.h \
         widget.h
 
 FORMS += \
