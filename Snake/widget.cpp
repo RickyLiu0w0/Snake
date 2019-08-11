@@ -7,8 +7,16 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     setUpLayout();//这里可以进行窗口各项的初始化设置
-    dataFile.open("data.dat", ios::in | ios::out | ios::binary);
     dh = new dataHelper();//只能创建一个对象
+
+    dataFile.open(dh->getCurrentPath(), ios::in | ios::out | ios::binary);
+    if (!dataFile)
+    {
+        QString dlgTitle="Error";
+        QString strInfo="文件打开失败";
+        QMessageBox::critical(this, dlgTitle, strInfo);
+        exit(1);
+    }
     dh->creatFile(dataFile);
     //日志输出区（调试用）
     qDebug("grid Layout 有 %d 个控件", gridLayoutInf->count());
@@ -17,6 +25,7 @@ Widget::Widget(QWidget *parent) :
 Widget::~Widget()
 {
     delete ui;
+    dataFile.close();
 }
 
 /**
@@ -46,6 +55,7 @@ void Widget::pBtnLogin_clicked()
             QString strInfo="权限：数据已全部清除";
             QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok);
             txtEditPassword->clear();
+            dataFile.flush();
             return;
         }
         else
@@ -116,6 +126,7 @@ void Widget::pBtnRegister_clicked()
             QString strInfo="信息登记成功，请尝试开始游戏，你的ID为 " + QString::number(i);
             QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok);
             txtEditPassword->clear();
+            dataFile.flush();
             return;
         }
     }

@@ -159,3 +159,12 @@ player dataHelper::getDatabyName(fstream &file, QString name)
     }
     return NULL;
 }
+
+string dataHelper::getCurrentPath()
+{
+    QString curPath = QCoreApplication::applicationDirPath();//获取系统当前目录
+    curPath += "/data.dat";
+    qDebug("path : %s", qPrintable(curPath));
+    string path = curPath.toStdString();
+    return path;
+}

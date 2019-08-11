@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
+#include <QCoreApplication>
 #include "player.h"
 using namespace std;
 class dataHelper
@@ -20,10 +21,12 @@ class dataHelper
         void caculateRank(fstream& file);
         void clearAll(fstream& file);
         player getDatabyName(fstream& file, QString name);
+        string getCurrentPath();
 
     private:
         int count;
         static bool singalInstant;
+        QString currentPath;
 };
 
 #endif // DATAHELPER_H
