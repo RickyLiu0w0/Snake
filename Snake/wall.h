@@ -10,7 +10,7 @@ class Wall
     public:
         Wall(int height, int width);
         int getSize();
-        WallUnit getWallUnit(int i);
+        WallUnit * getWallUnit(int i);
     private:
         QList<WallUnit * > wall ;
 };

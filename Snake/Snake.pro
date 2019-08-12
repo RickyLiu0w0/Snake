@@ -29,6 +29,7 @@ SOURCES += \
         food.cpp \
         foodunit.cpp \
         gamewidget.cpp \
+        garden.cpp \
         main.cpp \
         player.cpp \
         snake.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
         food.h \
         foodunit.h \
         gamewidget.h \
+        garden.h \
         player.h \
         snake.h \
         snakeunit.h \

@@ -27,7 +27,7 @@ int Wall::getSize()
     return wall.size();
 }
 
-WallUnit Wall::getWallUnit(int i)
+WallUnit * Wall::getWallUnit(int i)
 {
-    return *(wall.at(i));
+    return wall.at(i);
 }
