@@ -23,8 +23,8 @@ class player
         QString getPassword() const;
 
         //访问和设置玩家分数
-        void setScore(double scoreValue);
-        double getScore() const;
+        void setScore(int scoreValue);
+        int getScore() const;
 
         //访问和设置玩家排名
         void setRank(int rankValue);
@@ -37,7 +37,7 @@ class player
         int ID;
         char name[12];
         char password[14];//10*4\3
-        double score;
+        int score;
         int rank;
 
         QString base64_encryption(const QString input); //base64 加密函数

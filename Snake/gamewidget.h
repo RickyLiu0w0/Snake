@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QLCDNumber>
 #include <QPushButton>
+#include <QSpacerItem>
 
 #include "garden.h"
 #include "player.h"
@@ -41,6 +42,8 @@ class GameWidget : public QWidget
         QLabel * labPlayName; //展示玩家姓名
         QLCDNumber * playerScore; //展示玩家分数
         QPushButton * pBtnQuit; //退出按钮
+        QSpacerItem * spa;
+
 
         //游戏的成员
         //Garden * garden;

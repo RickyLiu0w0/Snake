@@ -59,11 +59,11 @@ QString player::getPassword() const
 }
 
 //访问和设置玩家分数
-void player::setScore(double scoreValue)
+void player::setScore(int scoreValue)
 {
     this->score = scoreValue;
 }
-double player::getScore() const
+int player::getScore() const
 {
     return score;
 }

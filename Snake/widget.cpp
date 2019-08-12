@@ -119,9 +119,6 @@ void Widget::pBtnRegister_clicked()
         {
             //否则
             player pla(name, password);
-            qDebug("玩家：%s", qPrintable(pla.getName()));
-            qDebug("分数：%.2f", pla.getScore());
-            qDebug("排名：%d", pla.getRank());
             int i = dh->saveData(dataFile,pla);
             QString dlgTitle="玩家";
             QString strInfo="信息登记成功，请尝试开始游戏，你的ID为 " + QString::number(i);
