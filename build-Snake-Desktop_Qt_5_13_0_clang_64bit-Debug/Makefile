@@ -53,15 +53,31 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Snake/datahelper.cpp \
+		../Snake/food.cpp \
+		../Snake/foodunit.cpp \
 		../Snake/gamewidget.cpp \
+		../Snake/garden.cpp \
 		../Snake/main.cpp \
 		../Snake/player.cpp \
+		../Snake/snake.cpp \
+		../Snake/snakeunit.cpp \
+		../Snake/unit.cpp \
+		../Snake/wall.cpp \
+		../Snake/wallunit.cpp \
 		../Snake/widget.cpp moc_gamewidget.cpp \
 		moc_widget.cpp
 OBJECTS       = datahelper.o \
+		food.o \
+		foodunit.o \
 		gamewidget.o \
+		garden.o \
 		main.o \
 		player.o \
+		snake.o \
+		snakeunit.o \
+		unit.o \
+		wall.o \
+		wallunit.o \
 		widget.o \
 		moc_gamewidget.o \
 		moc_widget.o
@@ -255,12 +271,28 @@ DIST          = ../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/lex.prf \
 		../Snake/Snake.pro ../Snake/datahelper.h \
+		../Snake/food.h \
+		../Snake/foodunit.h \
 		../Snake/gamewidget.h \
+		../Snake/garden.h \
 		../Snake/player.h \
+		../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../Snake/wall.h \
+		../Snake/wallunit.h \
 		../Snake/widget.h ../Snake/datahelper.cpp \
+		../Snake/food.cpp \
+		../Snake/foodunit.cpp \
 		../Snake/gamewidget.cpp \
+		../Snake/garden.cpp \
 		../Snake/main.cpp \
 		../Snake/player.cpp \
+		../Snake/snake.cpp \
+		../Snake/snakeunit.cpp \
+		../Snake/unit.cpp \
+		../Snake/wall.cpp \
+		../Snake/wallunit.cpp \
 		../Snake/widget.cpp
 QMAKE_TARGET  = Snake
 DESTDIR       = 
@@ -701,8 +733,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.13.0/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Snake/datahelper.h ../Snake/gamewidget.h ../Snake/player.h ../Snake/widget.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Snake/datahelper.cpp ../Snake/gamewidget.cpp ../Snake/main.cpp ../Snake/player.cpp ../Snake/widget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Snake/datahelper.h ../Snake/food.h ../Snake/foodunit.h ../Snake/gamewidget.h ../Snake/garden.h ../Snake/player.h ../Snake/snake.h ../Snake/snakeunit.h ../Snake/unit.h ../Snake/wall.h ../Snake/wallunit.h ../Snake/widget.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Snake/datahelper.cpp ../Snake/food.cpp ../Snake/foodunit.cpp ../Snake/gamewidget.cpp ../Snake/garden.cpp ../Snake/main.cpp ../Snake/player.cpp ../Snake/snake.cpp ../Snake/snakeunit.cpp ../Snake/unit.cpp ../Snake/wall.cpp ../Snake/wallunit.cpp ../Snake/widget.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Snake/gamewidget.ui ../Snake/widget.ui $(DISTDIR)/
 
 
@@ -744,6 +776,32 @@ compiler_moc_header_clean:
 moc_gamewidget.cpp: ../Snake/gamewidget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLCDNumber \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlcdnumber.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../Snake/garden.h \
+		../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Snake/food.h \
+		../Snake/foodunit.h \
+		../Snake/wall.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/wallunit.h \
+		../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		moc_predefs.h \
 		../../../../Qt/5.13.0/clang_64/bin/moc
 	/Users/rickyliu/Documents/Qt/5.13.0/clang_64/bin/moc $(DEFINES) --include /Users/rickyliu/Documents/QT/Project/Snake/build-Snake-Desktop_Qt_5_13_0_clang_64bit-Debug/moc_predefs.h -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/mkspecs/macx-clang -I/Users/rickyliu/Documents/QT/Project/Snake/Snake -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtGui.framework/Headers -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib ../Snake/gamewidget.h -o moc_gamewidget.cpp
@@ -763,13 +821,32 @@ moc_widget.cpp: ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QRegExpValidator \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../Snake/gamewidget.h \
-		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLCDNumber \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlcdnumber.h \
+		../Snake/garden.h \
+		../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Snake/food.h \
+		../Snake/foodunit.h \
+		../Snake/wall.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/wallunit.h \
 		../Snake/player.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QCoreApplication \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qcoreapplication.h \
 		moc_predefs.h \
 		../../../../Qt/5.13.0/clang_64/bin/moc
 	/Users/rickyliu/Documents/Qt/5.13.0/clang_64/bin/moc $(DEFINES) --include /Users/rickyliu/Documents/QT/Project/Snake/build-Snake-Desktop_Qt_5_13_0_clang_64bit-Debug/moc_predefs.h -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/mkspecs/macx-clang -I/Users/rickyliu/Documents/QT/Project/Snake/Snake -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtGui.framework/Headers -I/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include -F/Users/rickyliu/Documents/Qt/5.13.0/clang_64/lib ../Snake/widget.h -o moc_widget.cpp
@@ -804,16 +881,80 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 datahelper.o: ../Snake/datahelper.cpp ../Snake/datahelper.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QCoreApplication \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qcoreapplication.h \
 		../Snake/player.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o datahelper.o ../Snake/datahelper.cpp
 
+food.o: ../Snake/food.cpp ../Snake/food.h \
+		../Snake/foodunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o food.o ../Snake/food.cpp
+
+foodunit.o: ../Snake/foodunit.cpp ../Snake/foodunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o foodunit.o ../Snake/foodunit.cpp
+
 gamewidget.o: ../Snake/gamewidget.cpp ../Snake/gamewidget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QHBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qboxlayout.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLabel \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLCDNumber \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlcdnumber.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QPushButton \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qpushbutton.h \
+		../Snake/garden.h \
+		../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Snake/food.h \
+		../Snake/foodunit.h \
+		../Snake/wall.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/wallunit.h \
+		../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		ui_gamewidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o gamewidget.o ../Snake/gamewidget.cpp
+
+garden.o: ../Snake/garden.cpp ../Snake/garden.h \
+		../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Snake/food.h \
+		../Snake/foodunit.h \
+		../Snake/wall.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/wallunit.h \
+		../Snake/player.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o garden.o ../Snake/garden.cpp
 
 main.o: ../Snake/main.cpp ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
@@ -830,13 +971,32 @@ main.o: ../Snake/main.cpp ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QRegExpValidator \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../Snake/gamewidget.h \
-		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLCDNumber \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlcdnumber.h \
+		../Snake/garden.h \
+		../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Snake/food.h \
+		../Snake/foodunit.h \
+		../Snake/wall.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/wallunit.h \
 		../Snake/player.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QCoreApplication \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qcoreapplication.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Snake/main.cpp
@@ -845,6 +1005,51 @@ player.o: ../Snake/player.cpp ../Snake/player.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o player.o ../Snake/player.cpp
+
+snake.o: ../Snake/snake.cpp ../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Snake/food.h \
+		../Snake/foodunit.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o snake.o ../Snake/snake.cpp
+
+snakeunit.o: ../Snake/snakeunit.cpp ../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o snakeunit.o ../Snake/snakeunit.cpp
+
+unit.o: ../Snake/unit.cpp ../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o unit.o ../Snake/unit.cpp
+
+wall.o: ../Snake/wall.cpp ../Snake/wall.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/wallunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wall.o ../Snake/wall.cpp
+
+wallunit.o: ../Snake/wallunit.cpp ../Snake/wallunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wallunit.o ../Snake/wallunit.cpp
 
 widget.o: ../Snake/widget.cpp ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QWidget \
@@ -861,13 +1066,32 @@ widget.o: ../Snake/widget.cpp ../Snake/widget.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlineedit.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QRegExpValidator \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qvalidator.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
 		../Snake/gamewidget.h \
-		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QVBoxLayout \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPixmap \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpixmap.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/QLCDNumber \
+		../../../../Qt/5.13.0/clang_64/lib/QtWidgets.framework/Headers/qlcdnumber.h \
+		../Snake/garden.h \
+		../Snake/snake.h \
+		../Snake/snakeunit.h \
+		../Snake/unit.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QPainter \
+		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qpainter.h \
+		../Snake/food.h \
+		../Snake/foodunit.h \
+		../Snake/wall.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/QList \
 		../../../../Qt/5.13.0/clang_64/lib/QtGui.framework/Headers/qevent.h \
+		../Snake/wallunit.h \
 		../Snake/player.h \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QObject \
 		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../Snake/datahelper.h \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/QCoreApplication \
+		../../../../Qt/5.13.0/clang_64/lib/QtCore.framework/Headers/qcoreapplication.h \
 		ui_widget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o widget.o ../Snake/widget.cpp
 

@@ -66,7 +66,7 @@ void Widget::pBtnLogin_clicked()
                 player correctPla = dh->getDatabyName(dataFile, name);
                 if (correctPla.isCorrect(password)) //检查密码是否一致
                 {//如果一致
-                    jumpPage();//开始游戏
+                    jumpPage(correctPla);//开始游戏
                     return;
                 }
                 else //如果不一致
@@ -118,9 +118,10 @@ void Widget::pBtnRegister_clicked()
         else
         {
             //否则
-            player pla;
-            pla.setName(name);
-            pla.setPassword(password);
+            player pla(name, password);
+            qDebug("玩家：%s", qPrintable(pla.getName()));
+            qDebug("分数：%.2f", pla.getScore());
+            qDebug("排名：%d", pla.getRank());
             int i = dh->saveData(dataFile,pla);
             QString dlgTitle="玩家";
             QString strInfo="信息登记成功，请尝试开始游戏，你的ID为 " + QString::number(i);
@@ -264,13 +265,13 @@ void Widget::setUpLayout()
     file.close();
 }*/
 
-void Widget::jumpPage()
+void Widget::jumpPage(player pla)
 {
     //this->hide();
     clearLayout();
-     gameWidget = new GameWidget(this);
+    gameWidget = new GameWidget(pla ,this);
     connect(gameWidget, SIGNAL(sendsignal()), this, SLOT(reshow()));
-    setFixedSize(600,600);
+    setFixedSize(1000,800);
     setWindowTitle("Snake");
     gameWidget->show();
 }

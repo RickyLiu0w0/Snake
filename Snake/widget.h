@@ -52,7 +52,7 @@ class Widget : public QWidget
 
         void clearLayout();//清除UI界面
         void setUpLayout();//生成UI界面
-        void jumpPage();//跳转页面
+        void jumpPage(player pla);//跳转页面
 };
 
 #endif // WIDGET_H

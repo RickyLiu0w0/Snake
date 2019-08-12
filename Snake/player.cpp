@@ -1,10 +1,12 @@
 #include "player.h"
 
-player::player(int id  , const QString & name , const QString & password , double score , int rank)
-    :ID(id), score(score),rank(rank)
+player::player(const QString & name , const QString & password )
 {
+    setId(0);
     setName(name);
-    setPassword(password);
+     setPassword(password);
+    setScore(0);
+    setRank(1);
 }
 
 
@@ -41,11 +43,14 @@ void player::setPassword(QString password)
 
     tempResult = base64_encryption(password);
     //由QString转换为Char *
+
+    //在调用QByteArray.data()之前，必须要先显示储存这个bytearray。像这样const char *ch = str.toLatin1().data();会使程序崩溃，因为QByteArray没有被储存，调用data()前是不存在的，必须先显式调用一次toLatin1()，再调用data()。
     char* ptr;
     QByteArray by;
     by = tempResult.toLatin1();
     ptr = by.data();
-    memcpy(this->password,ptr,25);
+    memcpy(this->password,ptr,14); //!!!!!!!!!!!!!!!
+
     qDebug("password: %s", qPrintable(this->password) );
 }
 QString player::getPassword() const
@@ -54,9 +59,9 @@ QString player::getPassword() const
 }
 
 //访问和设置玩家分数
-void player::setScore(double score)
+void player::setScore(double scoreValue)
 {
-    this->score = score;
+    this->score = scoreValue;
 }
 double player::getScore() const
 {
@@ -64,9 +69,9 @@ double player::getScore() const
 }
 
 //访问和设置玩家排名
-void player::setRank(int rank)
+void player::setRank(int rankValue)
 {
-    this->rank = rank;
+    this->rank = rankValue;
 }
 int player::getRank() const
 {

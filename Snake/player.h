@@ -8,7 +8,7 @@ class player
 {
     public:
         //构造函数
-        player(int id = 0 , const QString & name =  "", const QString & password =  "", double score = 0.0, int rank = 0);
+        player(const QString & name =  "", const QString & password =  "");
 
         //访问和设置玩家ID
         void setId(int id);
@@ -23,11 +23,11 @@ class player
         QString getPassword() const;
 
         //访问和设置玩家分数
-        void setScore(double score);
+        void setScore(double scoreValue);
         double getScore() const;
 
         //访问和设置玩家排名
-        void setRank(int rank);
+        void setRank(int rankValue);
         int getRank() const;
 
         //判断玩家密码是否正确，比较的是参数password的正确性

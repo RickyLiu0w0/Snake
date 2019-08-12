@@ -157,7 +157,7 @@ player dataHelper::getDatabyName(fstream &file, QString name)
         if (QString::compare(name, pla.getName()) == 0)
             return pla;
     }
-    return NULL;
+    return *(new player);
 }
 
 string dataHelper::getCurrentPath()
