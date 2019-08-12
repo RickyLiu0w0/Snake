@@ -5,15 +5,14 @@ SnakeUnit::SnakeUnit(int xPos, int yPos) :Unit (xPos,yPos)
     flagHead = false;
 }
 
-void SnakeUnit::show(QPixmap pixmap, int UNIT_SIZE) const
+void SnakeUnit::show(QPainter & p, int UNIT_SIZE) const
 {
-    QPainter painter(&pixmap);
-    painter.drawRect(get_xPos() * UNIT_SIZE,  get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+    p.drawRect(get_xPos() * UNIT_SIZE,  get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     if (flagBody)
-        painter.fillRect(get_xPos() * UNIT_SIZE, get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, Qt::black);
+        p.fillRect(get_xPos() * UNIT_SIZE, get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, Qt::black);
     else if (flagHead)
     {
-        painter.fillRect(get_xPos() * UNIT_SIZE, get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, Qt::blue);
+        p.fillRect(get_xPos() * UNIT_SIZE, get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, Qt::blue);
     }
 }
 

@@ -11,7 +11,7 @@ class FoodUnit : public Unit
         int getScore() const;
         void setScore(int weight) ;
 
-        void show(QPixmap pixmap, int UNIT_SIZE) const ;
+        void show(QPainter  & p, int UNIT_SIZE) const ;
 
     private:
         int score;

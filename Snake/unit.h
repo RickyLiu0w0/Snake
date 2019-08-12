@@ -31,7 +31,7 @@ class Unit
         int get_xPos() const;
         int get_yPos() const;
 
-        virtual void show(QPixmap pixmap, int UNIT_SIZE) const = 0;
+        virtual void show(QPainter &p, int UNIT_SIZE) const = 0;
 
     private:
         int x;

@@ -12,7 +12,6 @@ class Food
 
     private:
         FoodUnit * foo;
-        FoodUnit fo;
 };
 
 #endif // FOOD_H

@@ -6,7 +6,7 @@ class WallUnit :public Unit
 {
     public:
         WallUnit(int xPos = 0, int yPos = 0);
-        void show(QPixmap pixmap, int UNIT_SIZE) const ;
+        void show(QPainter & p, int UNIT_SIZE) const ;
 };
 
 #endif // WALLUNIT_H

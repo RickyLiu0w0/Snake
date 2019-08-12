@@ -1,9 +1,11 @@
 #include "gamewidget.h"
 #include "ui_gamewidget.h"
 
+bool GameWidget::signalCount = true;
+
 GameWidget::GameWidget(player pla, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::GameWidget), pla(pla),UNIT_SIZE(800)
+    ui(new Ui::GameWidget), pla(pla),MAP_SIZE(20), UNIT_SIZE(40), time(100)
 {
     qDebug("玩家：%s", qPrintable(pla.getName()));
     qDebug("分数：%d", pla.getScore());
@@ -12,7 +14,7 @@ GameWidget::GameWidget(player pla, QWidget *parent) :
     vLayout = new QVBoxLayout(this); //创建垂直布局
 
     //加入画布
-    map = new QPixmap(UNIT_SIZE,UNIT_SIZE); //创建画布
+    map = new QPixmap(800,800); //创建画布
     labMap = new QLabel();//创建承接画布的容器
     hLayout->addWidget(labMap);//将容器放在左边
     labMap->setPixmap(*map); //把画布放在容器中
@@ -47,11 +49,35 @@ GameWidget::GameWidget(player pla, QWidget *parent) :
     //返回按钮
     pBtnQuit = new QPushButton("返回", this);
     pBtnQuit->setStyleSheet("QPushButton{font-size:20px}");
-    vLayout->addWidget(pBtnQuit);
+    pBtnQuit->setCursor(Qt::PointingHandCursor);
+    setFocusPolicy(Qt::ClickFocus);
     connect ( pBtnQuit, SIGNAL(clicked()), this, SLOT(pushButton_clicked()));
+    vLayout->addWidget(pBtnQuit);
+
 
     this->setLayout(hLayout);
     ui->setupUi(this);
+
+    //创建“有蛇”的花园
+    garden = new Garden(MAP_SIZE,MAP_SIZE);
+
+    //设置计时器
+    timer = new QTimer;
+    connect( timer, SIGNAL(timeout()) ,this, SLOT(timeOut()));
+    paint();
+    timer->setInterval(time);
+    timer->start() ;
+
+    Widget = parent;
+    if (GameWidget::signalCount)
+    {
+        connect(Widget, SIGNAL(w()), this, SLOT(w_c()));
+        connect(Widget, SIGNAL(a()), this, SLOT(a_c()));
+        connect(Widget, SIGNAL(s()), this, SLOT(s_c()));
+        connect(Widget, SIGNAL(d()), this, SLOT(d_c()));
+        connect(Widget, SIGNAL(sUpdate(player)), this, SLOT(upDate(player)));
+        signalCount = false;
+    }
 
 }
 
@@ -63,6 +89,80 @@ GameWidget::~GameWidget()
 void GameWidget::pushButton_clicked()
 {
     emit sendsignal();
+    timer->stop();
     this->close();
 }
 
+void GameWidget::w_c()
+{
+    garden->w_onClick();
+    qDebug("w");
+}
+
+void GameWidget::a_c()
+{
+    garden->a_onClick();
+    qDebug("a");
+}
+
+void GameWidget::s_c()
+{
+    garden->s_onClick();
+    qDebug("s");
+}
+
+void GameWidget::d_c()
+{
+    garden->d_onClick();
+    qDebug("d");
+}
+
+void GameWidget::timeOut()
+{
+    if (!garden->isContinue())
+    {
+        timer->stop();
+        pla.setScore(garden->getScore() + pla.getScore());
+        qDebug("时间停止！");
+        emit sGameOver(pla);
+    }
+    else
+    {
+    playerScore->display(garden->getScore());
+    labMap->setUpdatesEnabled(true);
+    labMap->update();
+    map->fill(QColor(228, 228, 228));
+    paint();
+    }
+}
+
+
+void GameWidget::paint()
+{
+    Unit * unit;
+    QPainter p(map);
+
+    for (int i = 0 ; i < garden->getWallSize(); i ++)
+    {
+        unit = garden->getUnitFromWall(i);
+        unit->show(p, UNIT_SIZE);
+    }
+    for (int i = 0; i < garden->getSnackSize() ; i++)
+    {
+        unit = garden->getUnitFromSanck(i);
+        unit->show(p, UNIT_SIZE);
+    }
+    unit = garden->getUnitFromFood();
+    unit->show(p, UNIT_SIZE);
+    labMap->setPixmap(*map); //把画布放在容器中
+}
+
+void GameWidget::upDate(player pla)
+{
+
+    QString str = pla.getName() + " 玩家\n" +
+                  "分数：" + QString::number( pla.getScore()) + "\n第 " +
+                   QString::number(pla.getRank()) + " 名";
+    QString dlgTitle="结果";
+    QMessageBox::information(this, dlgTitle, str,QMessageBox::Ok);
+}

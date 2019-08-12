@@ -1,12 +1,12 @@
 #include "garden.h"
 
-Garden::Garden(int hight, int length, player player)
+Garden::Garden(int hight, int length)
 {
        sna  = new Snake(hight, length);
        wal = new Wall(hight, length);
+       foo = new Food(hight,length,1);
        this->Hight = hight;
        this->Length = length;
-       pla = player;
        score = 0;
 }
 
@@ -94,11 +94,6 @@ void Garden::d_onClick()
     }
 }
 
- player Garden::getPlayer()
- {
-     return pla;
- }
-
  bool Garden::isContinue()
  {
      bool result;
@@ -110,8 +105,8 @@ void Garden::d_onClick()
      {
          int weight;
          score += foo->getFoodUnit()->getScore();
-         pla.setScore(score);
-         delete foo;
+         qDebug("Score = %d", score);
+
          if (score < 5 )
              weight = 1;
          else if (score < 15)
@@ -121,7 +116,7 @@ void Garden::d_onClick()
          else {
              weight = 3;
          }
-         foo = new Food((rand()% (Hight - 2)) + 2, (rand()% (Length - 2)) + 2 , weight);
+         foo = new Food(Hight , Length  , weight);
      }
      return result;
  }

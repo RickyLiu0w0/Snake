@@ -9,6 +9,7 @@
 #include <QLineEdit>
 #include <QRegExpValidator>
 #include <QMessageBox>
+#include <QKeyEvent>
 
 #include "gamewidget.h"
 #include "datahelper.h"
@@ -29,6 +30,7 @@ class Widget : public QWidget
         void pBtnLogin_clicked();
         void reshow();
         void pBtnRegister_clicked();
+        void gameOver(player pal);
        //void test();
 
     private:
@@ -53,6 +55,15 @@ class Widget : public QWidget
         void clearLayout();//清除UI界面
         void setUpLayout();//生成UI界面
         void jumpPage(player pla);//跳转页面
+        void keyPressEvent(QKeyEvent * e)   ;
+
+    signals:
+        void w();
+        void a();
+        void s();
+        void d();
+        void sUpdate(player);
+
 };
 
 #endif // WIDGET_H

@@ -123,6 +123,7 @@ void Widget::pBtnRegister_clicked()
             QString dlgTitle="玩家";
             QString strInfo="信息登记成功，请尝试开始游戏，你的ID为 " + QString::number(i);
             QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok);
+            dh->caculateRank(dataFile);
             txtEditPassword->clear();
             dataFile.flush();
             return;
@@ -268,7 +269,27 @@ void Widget::jumpPage(player pla)
     clearLayout();
     gameWidget = new GameWidget(pla ,this);
     connect(gameWidget, SIGNAL(sendsignal()), this, SLOT(reshow()));
+    connect(gameWidget, SIGNAL(sGameOver(player)), this, SLOT(gameOver(player)));
     setFixedSize(1000,800);
     setWindowTitle("Snake");
     gameWidget->show();
+}
+
+void Widget::keyPressEvent(QKeyEvent * e)
+{
+    switch (e->key())
+    {
+        case Qt::Key_W  :emit w() ; break;
+        case Qt::Key_S :  emit s() ;break;
+        case Qt::Key_A : emit a() ;  break;
+        case Qt::Key_D : emit d() ; break;
+        //case Qt::Key_R : timer->start() ; break;
+    }
+}
+
+void Widget::gameOver(player play)
+{
+    dh->updata(dataFile, play);
+    dh->caculateRank(dataFile);
+    emit sUpdate(play);
 }

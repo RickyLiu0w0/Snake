@@ -10,7 +10,7 @@
 class Garden
 {
     public:
-        Garden(int hight, int length, player player);
+        Garden(int hight, int length);
 
         int getHight();
         int getLength();
@@ -29,14 +29,12 @@ class Garden
         void a_onClick();
         void d_onClick();
 
-        player getPlayer();
         bool isContinue();
 
     private:
         int Hight;
         int Length;
         int score;
-        player pla;
         Snake * sna;
         Food * foo;
         Wall * wal;

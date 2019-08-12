@@ -33,7 +33,7 @@ SnakeUnit * Snake::getSnackUnit(int i)
 void Snake::move() //这里可以解释以下用了QList的好处
 {
     SnakeUnit * temp;
-    for (int i = snake.size(); i > 0 ; i--)
+    for (int i = snake.size() -1 ; i > 0 ; i--)
     {
         //用后一个方块代替前一个，达到前进的目的
         temp = snake.takeAt(i); //takeAt会从链表中删除，所以要加回去
@@ -110,6 +110,8 @@ bool Snake::isEatFood(Food *foo)
 bool Snake::isHitWall()
 {
     bool result ;
+   // qDebug("snake.at(0)->get_xPos()  == %d", snake.at(0)->get_xPos() );
+    //qDebug("snake.at(0)->get_yPos()  == %d", snake.at(0)->get_yPos() );
     result = snake.at(0)->get_xPos() >= fileHigth - 1
              ||  snake.at(0)->get_xPos() <= 0
              ||  snake.at(0)->get_yPos() >= fieldLength - 1
@@ -123,13 +125,15 @@ bool Snake::isHitSnake()
     for (int i = 1; i < snake.size() - 1; i ++)  //去头
     {
         result = snake.at(0)->get_xPos() == snake.at(i)->get_xPos()
-                && snake.at(0)->get_yPos() == snake.at(i)->get_yPos();
+               &&  snake.at(0)->get_yPos() == snake.at(i)->get_yPos();
+        if (result)
+            break;
     }
     return result;
 }
 
 bool Snake::isAlive()
 {
-    alive = isHitWall() || isHitSnake();
+    alive = !isHitWall() && !isHitSnake();
     return alive;
 }
