@@ -102,6 +102,13 @@ bool Snake::isEatFood(Food *foo)
         snake.insert(0, body);
         SnakeUnit* head = new SnakeUnit(foo->getFoodUnit()->get_xPos(), foo->getFoodUnit()->get_yPos());
         head->setToHead();
+        switch (direction)
+        {
+            case  East : head->moveEast(); break;
+            case  South : head->moveSouth(); break;
+            case West: head->moveWest() ; break;
+            case North :head->moveNorth(); break;
+        }
         snake.insert(0, head);
     }
     return result;

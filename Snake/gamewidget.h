@@ -55,7 +55,7 @@ class GameWidget : public QWidget
          QTimer * timer;
 
         //游戏的成员
-        Garden * garden;
+        static Garden * garden;
         player  pla;
 
         static bool signalCount ;
