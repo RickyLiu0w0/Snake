@@ -11,6 +11,8 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QDesktopWidget>
+#include <QDir>
+#include <QCoreApplication>
 
 #include "gamewidget.h"
 #include "datahelper.h"
@@ -56,9 +58,10 @@ class Widget : public QWidget
         void clearLayout();//清除UI界面
         void setUpLayout();//生成UI界面
         void jumpPage(player pla);//跳转页面
-        void keyPressEvent(QKeyEvent * e)   ;
+        void keyPressEvent(QKeyEvent * e)   ;//监听键盘事件
 
     signals:
+        //待发射的信号，按键信号和结算信号
         void w();
         void a();
         void s();

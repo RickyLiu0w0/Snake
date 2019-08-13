@@ -94,6 +94,7 @@ void Garden::d_onClick()
     }
 }
 
+//移动蛇，判断是否存活，或吃了食物
  bool Garden::isContinue()
  {
      bool result;

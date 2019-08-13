@@ -29,6 +29,7 @@ class GameWidget : public QWidget
 
 
     private slots:
+        //信号槽，监听本页面按钮点击信号和Widget传来的函数执行信号
         void pushButton_clicked();
         void  timeOut();
         void w_c();
@@ -44,7 +45,7 @@ class GameWidget : public QWidget
         QVBoxLayout * vLayout;// 垂直布局
         QHBoxLayout * hLayout; //水平布局
         QLabel * labMap;//放画布
-        QWidget  * Widget;
+        QWidget  * Widget;//上一页面的指针
 
         //控件
         QPixmap * map; //游戏画布
@@ -52,21 +53,22 @@ class GameWidget : public QWidget
         QLCDNumber * playerScore; //展示玩家分数
         QPushButton * pBtnQuit; //退出按钮
         QSpacerItem * spa; //分割器
-         QTimer * timer;
+         QTimer * timer;//计数器
 
         //游戏的成员
         static Garden * garden;
         player  pla;
 
-        static bool signalCount ;
-        const int MAP_SIZE;
-        const int UNIT_SIZE;
-         int time;
+        static bool signalCount ;//控制信号只建立一次连接
+        const int MAP_SIZE;//图的大小
+        const int UNIT_SIZE;//方块大小
+         int time;//控制时间
 
-         void paint();
+         void paint();//绘制画布
 
 
     signals:
+         //发送出去的信号
         void sendsignal();
         void sGameOver(player pal);
 };

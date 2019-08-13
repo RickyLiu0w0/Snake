@@ -47,21 +47,3 @@ int Unit::get_yPos() const
     return y;
 }
 
-/*
-void Unit::show(QPixmap pixmap, int UNIT_SIZE)
-{
-    QPainter painter(&pixmap);
-    painter.drawRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
-    if (isSnakeHead())
-    {
-        painter.fillRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, Qt::blue);
-    }
-    else if (isSnakeBody())
-    {
-        painter.fillRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, Qt::black);
-    }else if (isWall())
-    {
-        painter.fillRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE, QColor(253, 246, 227));
-    }
-}
-*/

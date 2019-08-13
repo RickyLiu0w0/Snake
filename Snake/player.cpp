@@ -29,7 +29,7 @@ void player::setName(QString name)
     by = name.toLatin1();
     ptr = by.data();
     memcpy(this->name,ptr,12);//这一句，必须加，不然不只是把指针指向了值，并没有赋值
-    qDebug("ID: %s", this->name);
+   // qDebug("ID: %s", this->name);
 }
 QString player::getName()  const
 {
@@ -44,14 +44,15 @@ void player::setPassword(QString password)
     tempResult = base64_encryption(password);
     //由QString转换为Char *
 
-    //在调用QByteArray.data()之前，必须要先显示储存这个bytearray。像这样const char *ch = str.toLatin1().data();会使程序崩溃，因为QByteArray没有被储存，调用data()前是不存在的，必须先显式调用一次toLatin1()，再调用data()。
+    //在调用QByteArray.data()之前，必须要先显示储存这个bytearray。像这样const char *ch = str.toLatin1().data();会使程序崩溃，因为QByteArray没有被储存，调用data()前是不存在的，必须先显式调用一次toLatin1()，再调用data()
     char* ptr;
     QByteArray by;
     by = tempResult.toLatin1();
     ptr = by.data();
     memcpy(this->password,ptr,14); //!!!!!!!!!!!!!!!
+                                                          //特别注意，大小曾经搞错，导致文件内容损坏
 
-    qDebug("password: %s", qPrintable(this->password) );
+    //qDebug("password: %s", qPrintable(this->password) );
 }
 QString player::getPassword() const
 {
@@ -78,6 +79,7 @@ int player::getRank() const
     return rank;
 }
 
+//base64加密函数，有参考网上
 QString player::base64_encryption(const QString input)
 {
     QString passBin = "";
@@ -86,7 +88,7 @@ QString player::base64_encryption(const QString input)
     {
        passBin.clear();
        passBin = QString::number(input.at(var).toLatin1(),2);
-       qDebug("Binary Before: %s", qPrintable(passBin) );
+       //qDebug("Binary Before: %s", qPrintable(passBin) );
        //为了补全8位二进制
        if (passBin.length() < 8)
        {
@@ -102,7 +104,7 @@ QString player::base64_encryption(const QString input)
        //将每一个8位二进制连接起来
        binResult += passBin;
     }
-     qDebug("Binary After: %s", qPrintable(binResult) );
+     //qDebug("Binary After: %s", qPrintable(binResult) );
     int i = 0;
     int k = 0;
     const int n =binResult .length();
@@ -162,8 +164,8 @@ QString player::base64_encryption(const QString input)
 
 bool player::isCorrect(QString password)
 {
-    qDebug("用户输入的密码是：%s", qPrintable(password));
+    //qDebug("用户输入的密码是：%s", qPrintable(password));
     QString result =  base64_encryption(password);
-    qDebug("原密码是：%s", qPrintable(this->password));
+   // qDebug("原密码是：%s", qPrintable(this->password));
     return QString::compare(this->password,result) == 0;
 }

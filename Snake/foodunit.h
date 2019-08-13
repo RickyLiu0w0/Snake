@@ -3,6 +3,7 @@
 
 #include "unit.h"
 
+//继承了“单元”类
 class FoodUnit : public Unit
 {
     public:

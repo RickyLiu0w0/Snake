@@ -1,7 +1,7 @@
 #ifndef WALLUNIT_H
 #define WALLUNIT_H
 #include "unit.h"
-
+//继承
 class WallUnit :public Unit
 {
     public:

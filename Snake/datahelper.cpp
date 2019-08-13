@@ -1,6 +1,6 @@
 #include "datahelper.h"
 
-bool dataHelper::singalInstant = false;
+bool dataHelper::singalInstant = false;//控制对象只能创建一次
 
 dataHelper::dataHelper()
 {
@@ -16,64 +16,83 @@ dataHelper::dataHelper()
     }
 }
 
+/**
+ * @brief dataHelper::creatFile
+ * @param file
+ * 创建数据库文件
+ */
 void dataHelper::creatFile(fstream &file)
 {
     file.seekp(0);
-    file.peek();
-   // qDebug("location == %s", qPrintable(  QString::number(file.tellp(),10)));
-   // qDebug("file.eof() == %d", file.eof());
+    file.peek();//需要读取一下下一个字符，才能知道到末尾没有
     if (file.eof()) //判断是否为首次创建的文件
     {
-         file.clear();
+         file.clear();//重设goodbit位
         qDebug("文件首次创建");
        //  qDebug("sizeof == %d", sizeof (count));
-        file.write(reinterpret_cast<const char * >(&count), sizeof (count));
+        file.write(reinterpret_cast<const char * >(&count), sizeof (count));//初始化文件，以二进制的写入文件
         //file.flush();
-        //qDebug("写完之后location == %s", qPrintable(  QString::number(file.tellp(),10)));
     }
     else
     {
-       file.clear();
+       file.clear();//重设goodbit位，其实这里可以不用
        qDebug("文件非首次创建");
        file.seekg(0);
-       file.read(reinterpret_cast< char * >(&count), sizeof (count));
+       file.read(reinterpret_cast< char * >(&count), sizeof (count));//读取文件里面的记录数目
     }
 }
 
+/**
+ * @brief dataHelper::saveData
+ * @param file
+ * @param pla
+ * @return 新建玩家的ID号
+ *
+ */
 int dataHelper::saveData(fstream& file, player& pla)
 {
-    file.seekg(0);
+    file.seekg(0);//文件定位指针
     file.read(reinterpret_cast< char * >(&count), sizeof (count));
     //qDebug("count = %d", count);
     count ++;
     pla.setId(count);
     file.seekp((count - 1) *sizeof (player) + sizeof (count)); //含有隐式类型转换
-    file.write(reinterpret_cast<const char *>(&pla), sizeof (player));
+    file.write(reinterpret_cast<const char *>(&pla), sizeof (player));//写入玩家数据
     file.seekp(0);
-    file.write(reinterpret_cast<const char * >(&count), sizeof (count));
+    file.write(reinterpret_cast<const char * >(&count), sizeof (count));//更新文件记录数
     return count;
 }
 
+/**
+ * @brief dataHelper::getDatabyId
+ * @param file
+ * @param id
+ * @return 寻找到的玩家
+ * 根据id寻找玩家信息
+ */
 player dataHelper::getDatabyId(fstream& file, int id)
 {
     player pla;
-    //qDebug("(id - 1) *sizeof (player) + sizeof (count) == %d", (id - 1) *sizeof (player) + sizeof (count));
-    file.seekg((id - 1) *sizeof (player) + sizeof (count));
-     //qDebug("location == %s", qPrintable(  QString::number(file.tellp(),10)));
-    file.read(reinterpret_cast< char * >(&pla), sizeof (player));
-     //qDebug("读完之后location == %s", qPrintable(  QString::number(file.tellp(),10)));
-     qDebug("ID = %d",  pla.getId());
-     qDebug("name = %s", qPrintable( pla.getName()));
-
+    file.seekg((id - 1) *sizeof (player) + sizeof (count)); //  根据id号搜索文件
+    file.read(reinterpret_cast< char * >(&pla), sizeof (player));//读取文件信息
+     //qDebug("ID = %d",  pla.getId());
+     //qDebug("name = %s", qPrintable( pla.getName()));
     return pla;
 }
 
+/**
+ * @brief dataHelper::getAllPlayer
+ * @param file
+ * @return 玩家的列表
+ * 返回整个数据库记录
+ */
 QList<player> dataHelper::getAllPlayer(fstream& file)
 {
     file.seekg(sizeof (count));
     QList<player> list;
     player pla ;
 
+    //两种方法来遍历，我个人选择了第二种的
     /**方法一
     while (file.peek() != EOF) //解决读两次
     {
@@ -115,10 +134,16 @@ bool dataHelper::isExist(fstream& file, QString name)
 
  void dataHelper::updata(fstream& file , player& pla)
  {
+     //更新对应玩家的信息
       file.seekg((pla.getId() - 1) *sizeof (player) + sizeof (count));
       file.write(reinterpret_cast<const char *>(&pla), sizeof (player));
  }
 
+ /**
+   * @brief dataHelper::caculateRank
+   * @param file
+   * 根据文件中的玩家分数计算排名
+   */
   void dataHelper::caculateRank(fstream& file)
   {
       QList<player> list;
@@ -139,13 +164,20 @@ bool dataHelper::isExist(fstream& file, QString name)
 
 void dataHelper::clearAll(fstream &file)
 {
+    //清库
     file.seekg(0);
     count = 0;
-     file.write(reinterpret_cast<const char * >(&count), sizeof (count));
-     truncate("data.dat",sizeof(count));
+     file.write(reinterpret_cast<const char * >(&count), sizeof (count));//计数重设0
+     truncate("data.dat",sizeof(count));//把文件截断，留下计数
      file.flush();
 }
 
+/**
+ * @brief dataHelper::getDatabyName
+ * @param file
+ * @param name
+ * @return 玩家
+ */
 player dataHelper::getDatabyName(fstream &file, QString name)
 {
     QList<player> list;
@@ -157,11 +189,11 @@ player dataHelper::getDatabyName(fstream &file, QString name)
         if (QString::compare(name, pla.getName()) == 0)
             return pla;
     }
-    return *(new player);
+    return *(new player); //如果没有，就新建一个玩家返回去
 }
 
 string dataHelper::getCurrentPath()
-{
+{//为了创建和打开数据文件而设的
     QString curPath = QCoreApplication::applicationDirPath();//获取系统当前目录
     curPath += "/data.dat";
     qDebug("path : %s", qPrintable(curPath));

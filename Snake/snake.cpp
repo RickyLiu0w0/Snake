@@ -6,6 +6,7 @@ Snake:: Snake(int hight, int length)
     fieldLength = length;
     fileHigth = hight;
     alive = true;
+    //初始化中间，三节
     int beginX = length / 2;
     int beginY =hight / 2;
     SnakeUnit * s;
@@ -30,7 +31,7 @@ SnakeUnit * Snake::getSnackUnit(int i)
     return snake.at(i);
 }
 
-void Snake::move() //这里可以解释以下用了QList的好处
+void Snake::move() //这里可以解释以下用了QList的好处，因为频繁获取插入元素，所以链表开销比较小，不用整体移动
 {
     SnakeUnit * temp;
     for (int i = snake.size() -1 ; i > 0 ; i--)
@@ -99,9 +100,9 @@ bool Snake::isEatFood(Food *foo)
     {
         SnakeUnit * body = snake.takeAt(0);
         body->setToBody();
-        snake.insert(0, body);
+        snake.insert(0, body);//食物变成身体
         SnakeUnit* head = new SnakeUnit(foo->getFoodUnit()->get_xPos(), foo->getFoodUnit()->get_yPos());
-        head->setToHead();
+        head->setToHead();//头部向前移动
         switch (direction)
         {
             case  East : head->moveEast(); break;
@@ -114,7 +115,7 @@ bool Snake::isEatFood(Food *foo)
     return result;
 }
 
-bool Snake::isHitWall()
+bool Snake::isHitWall()//判断是否撞墙
 {
     bool result ;
    // qDebug("snake.at(0)->get_xPos()  == %d", snake.at(0)->get_xPos() );
@@ -126,7 +127,7 @@ bool Snake::isHitWall()
     return result;
 }
 
-bool Snake::isHitSnake()
+bool Snake::isHitSnake()//判断是否自咬
 {
     bool result = false;
     for (int i = 1; i < snake.size() - 1; i ++)  //去头

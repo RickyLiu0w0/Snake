@@ -2,6 +2,7 @@
 #define SNAKEUNIT_H
 #include "unit.h"
 
+//继承
 class SnakeUnit: public Unit
 {
     public:

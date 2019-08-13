@@ -6,7 +6,7 @@
 #include "food.h"
 #include "player.h"
 
-
+//整合蛇，墙和食物
 class Garden
 {
     public:

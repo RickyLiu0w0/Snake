@@ -4,6 +4,7 @@
 #include <QObject>
 #include <cmath>
 
+//玩家类，储存玩家的信息
 class player
 {
     public:
@@ -36,7 +37,7 @@ class player
     private:
         int ID;
         char name[12];
-        char password[14];//10*4\3
+        char password[14];//10*4\3 <- 这是根据base64的特性确定的
         int score;
         int rank;
 

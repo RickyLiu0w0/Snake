@@ -4,6 +4,7 @@
 #include "snakeunit.h"
 #include "food.h"
 
+//蛇单元的一个整合
 class Snake
 {
     public:
@@ -22,7 +23,7 @@ class Snake
         bool isHitSnake();
         bool isAlive();
 
-        enum directionEnum
+        enum directionEnum  //蛇的方向
         {
             East, South, West, North
         } direction;

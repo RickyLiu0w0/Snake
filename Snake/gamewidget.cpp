@@ -1,12 +1,13 @@
 #include "gamewidget.h"
 #include "ui_gamewidget.h"
 
-bool GameWidget::signalCount = true;
-Garden * GameWidget ::garden = nullptr;
+bool GameWidget::signalCount = true;//单一信号连接
+Garden * GameWidget ::garden = nullptr;//单一花园
 
 GameWidget::GameWidget(player pla, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::GameWidget), pla(pla),MAP_SIZE(20), UNIT_SIZE(40), time(200)
+  //设置玩家。地图大小，单元格大小，刷新时间
 {
     qDebug("玩家：%s", qPrintable(pla.getName()));
     qDebug("分数：%d", pla.getScore());
@@ -50,12 +51,12 @@ GameWidget::GameWidget(player pla, QWidget *parent) :
     //返回按钮
     pBtnQuit = new QPushButton("返回", this);
     pBtnQuit->setStyleSheet("QPushButton{font-size:20px}");
-    pBtnQuit->setCursor(Qt::PointingHandCursor);
+    pBtnQuit->setCursor(Qt::PointingHandCursor);//解除按钮聚焦
     setFocusPolicy(Qt::ClickFocus);
     connect ( pBtnQuit, SIGNAL(clicked()), this, SLOT(pushButton_clicked()));
     vLayout->addWidget(pBtnQuit);
 
-
+    //渲染界面
     this->setLayout(hLayout);
     ui->setupUi(this);
 
@@ -65,7 +66,7 @@ GameWidget::GameWidget(player pla, QWidget *parent) :
     //设置计时器
     timer = new QTimer;
     connect( timer, SIGNAL(timeout()) ,this, SLOT(timeOut()));
-    paint();
+    paint();//绘制花园
     timer->setInterval(time);
     timer->start() ;
 
@@ -87,6 +88,7 @@ GameWidget::~GameWidget()
     delete ui;
 }
 
+//返回上层界面
 void GameWidget::pushButton_clicked()
 {
     emit sendsignal();
@@ -94,6 +96,7 @@ void GameWidget::pushButton_clicked()
     this->close();
 }
 
+//收到w键盘信号，让蛇转向上方，以下类似
 void GameWidget::w_c()
 {
     garden->w_onClick();
@@ -118,6 +121,7 @@ void GameWidget::d_c()
     qDebug("d");
 }
 
+//判定是否输了，并刷新界面
 void GameWidget::timeOut()
 {
     if (!garden->isContinue())
@@ -129,7 +133,7 @@ void GameWidget::timeOut()
     }
     else
     {
-    playerScore->display(garden->getScore());
+    playerScore->display(garden->getScore());//lcd及时显示当前分数
     labMap->setUpdatesEnabled(true);
     labMap->update();
     map->fill(QColor(228, 228, 228));
@@ -137,7 +141,11 @@ void GameWidget::timeOut()
     }
 }
 
-
+/**
+ * @brief GameWidget::paint
+ * 花园绘制
+ * 使用Unit指针，调用不同子类的打印函数，使用多态
+ */
 void GameWidget::paint()
 {
     Unit * unit;
@@ -160,7 +168,7 @@ void GameWidget::paint()
 
 void GameWidget::upDate(player pla)
 {
-
+    //显示游戏结束后分数
     QString str = pla.getName() + " 玩家\n" +
                   "分数：" + QString::number( pla.getScore()) + "\n第 " +
                    QString::number(pla.getRank()) + " 名";

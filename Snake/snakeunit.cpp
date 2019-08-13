@@ -5,6 +5,13 @@ SnakeUnit::SnakeUnit(int xPos, int yPos) :Unit (xPos,yPos)
     flagHead = false;
 }
 
+/**
+ * @brief SnakeUnit::show
+ * @param p
+ * @param UNIT_SIZE
+ * @overload
+ * 根据位置不同，绘制不同颜色
+ */
 void SnakeUnit::show(QPainter & p, int UNIT_SIZE) const
 {
     p.drawRect(get_xPos() * UNIT_SIZE,  get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);

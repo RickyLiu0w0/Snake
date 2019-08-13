@@ -17,9 +17,16 @@ int FoodUnit::getScore() const
     return score;
 }
 
+/**
+ * @brief FoodUnit::show
+ * @param p
+ * @param UNIT_SIZE
+ * @overload
+ * 绘制食物的函数，实现Unit类的虚函数
+ */
 void FoodUnit::show(QPainter & p, int UNIT_SIZE) const
 {
-    p.drawRect(get_xPos() * UNIT_SIZE,  get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+    p.drawRect(get_xPos() * UNIT_SIZE,  get_yPos() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);//(x坐标，y坐标，长，宽)
     switch (getScore())
     {
         //1级食物，洋红色

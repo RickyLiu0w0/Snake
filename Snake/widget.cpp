@@ -13,8 +13,29 @@ Widget::Widget(QWidget *parent) :
     if (!dataFile)
     {
         QString dlgTitle="Error";
-        QString strInfo="文件打开失败";
-        QMessageBox::critical(this, dlgTitle, strInfo);
+        QString strInfo="文件打开失败，即将为你创建，请重开本程序";
+         QMessageBox::critical(this, dlgTitle, strInfo);
+
+        //创建文件
+        QDir tempDir;
+        //用于保存当前路径
+        QString currentDir = tempDir.currentPath();
+
+        //将程序的执行路径设置到要存文件的路径下
+        tempDir.setCurrent (QCoreApplication::applicationDirPath());
+        //qDebug("%s", qPrintable(QCoreApplication::applicationDirPath()));
+        QFile *file = new QFile;
+        file->setFileName("data.dat");
+        if(!file->open(QIODevice::WriteOnly|QIODevice::Text))
+           {
+                strInfo.clear();
+                strInfo = "文件无法新建，请联系开发者";
+                QMessageBox::critical(this, dlgTitle, strInfo);
+           }
+        file->close();
+
+        //将程序当前路径设置为原来的路径
+        tempDir.setCurrent(currentDir);
         exit(1);
     }
     dh->creatFile(dataFile);
@@ -48,7 +69,7 @@ void Widget::pBtnLogin_clicked()
         player pal;
         pal.setName(name);
         pal.setPassword(password);
-        if (QString::compare(name,"jiahui") == 0&& QString::compare("1764171450",password) == 0)
+        if (QString::compare(name,"Admin") == 0&& QString::compare("nimdA",password) == 0)
         {
             dh->clearAll(dataFile);
             QString dlgTitle="管理员";
@@ -66,6 +87,9 @@ void Widget::pBtnLogin_clicked()
                 player correctPla = dh->getDatabyName(dataFile, name);
                 if (correctPla.isCorrect(password)) //检查密码是否一致
                 {//如果一致
+                    QString str = "即将开始游戏，WSAD键移动，点击下面OK按钮，即开始";
+                    QString dlgTitle="准备开始";
+                    QMessageBox::information(this, dlgTitle, str,QMessageBox::Ok);
                     jumpPage(correctPla);//开始游戏
                     return;
                 }
@@ -263,17 +287,18 @@ void Widget::setUpLayout()
     file.close();
 }*/
 
+//页面跳转
 void Widget::jumpPage(player pla)
 {
     //this->hide();
     clearLayout();
     gameWidget = new GameWidget(pla ,this);
     connect(gameWidget, SIGNAL(sendsignal()), this, SLOT(reshow()));
-    connect(gameWidget, SIGNAL(sGameOver(player)), this, SLOT(gameOver(player)));
+    connect(gameWidget, SIGNAL(sGameOver(player)), this, SLOT(gameOver(player)));//游戏结束结算信号绑定
     setFixedSize(1000,800);
     setWindowTitle("Snake");
     QDesktopWidget *desktop = QApplication::desktop();
-   move( (desktop->width() - gameWidget->width()) / 2 , (desktop->height() - gameWidget->height()) / 2);
+   move( (desktop->width() - gameWidget->width()) / 2 , (desktop->height() - gameWidget->height()) / 2);//设置页面居中
     gameWidget->show();
 }
 
@@ -281,6 +306,7 @@ void Widget::keyPressEvent(QKeyEvent * e)
 {
     switch (e->key())
     {
+        //键盘信号监听与发送
         case Qt::Key_W  :emit w() ; break;
         case Qt::Key_S :  emit s() ;break;
         case Qt::Key_A : emit a() ;  break;
@@ -291,6 +317,7 @@ void Widget::keyPressEvent(QKeyEvent * e)
 
 void Widget::gameOver(player play)
 {
+    //游戏结束，更新数据库，并发送信号返回更新值
     dh->updata(dataFile, play);
     dh->caculateRank(dataFile);
     emit sUpdate(play);

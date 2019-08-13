@@ -4,7 +4,7 @@
 #include <QList>
 
 #include "wallunit.h"
-
+//墙单元的集合
 class Wall
 {
     public:

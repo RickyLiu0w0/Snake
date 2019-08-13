@@ -7,7 +7,7 @@
 class Food
 {
     public:
-        Food(int hight, int width, int weight);
+        Food(int hight, int width, int weight);//食物的坐标和权值
         FoodUnit * getFoodUnit() const;
 
     private:
