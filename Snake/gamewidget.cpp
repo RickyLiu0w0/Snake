@@ -6,7 +6,7 @@ Garden * GameWidget ::garden = nullptr;
 
 GameWidget::GameWidget(player pla, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::GameWidget), pla(pla),MAP_SIZE(20), UNIT_SIZE(40), time(3000)
+    ui(new Ui::GameWidget), pla(pla),MAP_SIZE(20), UNIT_SIZE(40), time(200)
 {
     qDebug("玩家：%s", qPrintable(pla.getName()));
     qDebug("分数：%d", pla.getScore());

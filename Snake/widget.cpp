@@ -272,6 +272,8 @@ void Widget::jumpPage(player pla)
     connect(gameWidget, SIGNAL(sGameOver(player)), this, SLOT(gameOver(player)));
     setFixedSize(1000,800);
     setWindowTitle("Snake");
+    QDesktopWidget *desktop = QApplication::desktop();
+   move( (desktop->width() - gameWidget->width()) / 2 , (desktop->height() - gameWidget->height()) / 2);
     gameWidget->show();
 }
 

@@ -10,6 +10,7 @@
 #include <QRegExpValidator>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QDesktopWidget>
 
 #include "gamewidget.h"
 #include "datahelper.h"
